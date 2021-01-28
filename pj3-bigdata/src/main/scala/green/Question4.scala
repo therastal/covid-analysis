@@ -152,10 +152,10 @@ object Question4 {
       .csv(path)
       .cache()
 
-    println(s"Trend of discussion is ${TrendingTweets.getTrendingPercentageChangeSincePeak(df, spark)} since peak")
-    println(s"Compared to last month, trend of discussion is ${TrendingTweets.getTrendingPercentageOverMonth(df, spark)}")
-    println(s"Compared to last week, trend of discussion is ${TrendingTweets.getTrendingPercentageOverWeek(df, spark)}")
-    println(s"Compared to yesterday, trend of discussion is ${TrendingTweets.getTrendingPercentageSinceYesterday(df, spark)}")
+    println(s"Trend of discussion is ${TrendPercentChange.sincePeak(df, spark)} since peak")
+    println(s"Compared to last month, trend of discussion is ${TrendPercentChange.latestMonth(df, spark)}")
+    println(s"Compared to last week, trend of discussion is ${TrendPercentChange.latestWeek(df, spark)}")
+    println(s"Compared to yesterday, trend of discussion is ${TrendPercentChange.sincePreviousDay(df, spark)}")
   }
 
   def printQuestion4(spark : SparkSession): Unit = {
@@ -171,7 +171,7 @@ object Question4 {
       .csv("s3a://adam-king-848/data/CDC_Covid_archive.tsv")
       .cache()
 
-    TrendingTweets.getTweetCounts(df1, spark)
+    TweetCount.countsByDate(df1, spark)
     getCasesByCount(df2, spark)
   }
 
