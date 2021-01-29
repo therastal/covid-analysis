@@ -25,7 +25,7 @@ object GreenRunner {
     println(s"Compared to last week, trend of discussion is ${TrendPercentChange.latestWeek(tweetDF, spark)}")
     println(s"Compared to yesterday, trend of discussion is ${TrendPercentChange.sincePreviousDay(tweetDF, spark)}")
 
-    TweetCount.countsByDate(tweetDF, spark)
+    TweetCount.dailyCountsChronological(tweetDF, spark)
     CovidCases.casesByCount(covidDF, spark)
   }
 }
