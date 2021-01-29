@@ -22,7 +22,7 @@ object TrendPercentChange {
 
   /** Returns the change in trending percentage over the past week */
   def latestWeek(df: DataFrame, spark: SparkSession): Long = {
-    val week = TweetCount.week(df, spark).toDouble
+    val week = TweetCount.weekAvg(df, spark).toDouble
     val latest = TweetCount.latest(df, spark).toDouble
 
     calculateChange(latest, week)
@@ -30,7 +30,7 @@ object TrendPercentChange {
 
   /** Returns the change in trending percentage over the past month */
   def latestMonth(df: DataFrame, spark: SparkSession): Long = {
-    val month = TweetCount.month(df, spark).toDouble
+    val month = TweetCount.monthAvg(df, spark).toDouble
     val latest = TweetCount.latest(df, spark).toDouble
 
     calculateChange(latest, month)

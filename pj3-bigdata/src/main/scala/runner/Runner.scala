@@ -2,6 +2,7 @@
 package runner
 //import your package here like so:
 import blue.Question8
+import green._
 
 import java.util.Scanner
 
@@ -13,8 +14,6 @@ import scala.concurrent.Future._
 import scala.sys.exit
 
 import org.apache.spark.sql.{DataFrame, SparkSession}
-import green.Q4.Question4
-import green.Q5.Question5
 import org.apache.spark.sql.SparkSession
 
 import purple.Q1.HashtagsByRegion

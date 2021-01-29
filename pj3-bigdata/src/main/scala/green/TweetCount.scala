@@ -42,7 +42,7 @@ object TweetCount {
   }
 
   /** Returns the average number of tweets over the latest week. */
-  def week(df: DataFrame, spark: SparkSession): Int = {
+  def weekAvg(df: DataFrame, spark: SparkSession): Int = {
     import spark.implicits._
 
     val week = countsByDate(df, spark)
@@ -53,7 +53,7 @@ object TweetCount {
   }
 
   /** Returns the average number of tweets over the latest month. */
-  def month(df: DataFrame, spark: SparkSession): Int = {
+  def monthAvg(df: DataFrame, spark: SparkSession): Int = {
     import spark.implicits._
 
     val month = countsByDate(df, spark)
