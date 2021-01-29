@@ -15,7 +15,7 @@ object TweetCount {
   def peak(df: DataFrame, spark: SparkSession): Long = {
     import spark.implicits._
 
-    countsByDateDesc(df, spark)
+    dailyCountsRanked(df, spark)
       .first()
       .getLong(1)
   }
@@ -24,18 +24,18 @@ object TweetCount {
   def latest(df: DataFrame, spark: SparkSession): Long = {
     import spark.implicits._
 
-    countsByDate(df, spark)
+    dailyCountsChronological(df, spark)
       .take(2)
       .last(1)
       .toString
       .toLong
   }
 
-  /** Returns the number of tweets on the date previous to the latest date.*/
+  /** Returns the number of tweets on the date previous to the latest date. */
   def previous(df: DataFrame, spark: SparkSession): Long = {
     import spark.implicits._
 
-    countsByDate(df, spark)
+    dailyCountsChronological(df, spark)
       .take(3)
       .drop(2)(0)
       .getLong(1)
@@ -45,7 +45,7 @@ object TweetCount {
   def weekAvg(df: DataFrame, spark: SparkSession): Int = {
     import spark.implicits._
 
-    val week = countsByDate(df, spark)
+    val week = dailyCountsChronological(df, spark)
       .take(9)
       .drop(2)
 
@@ -56,20 +56,22 @@ object TweetCount {
   def monthAvg(df: DataFrame, spark: SparkSession): Int = {
     import spark.implicits._
 
-    val month = countsByDate(df, spark)
+    val month = dailyCountsChronological(df, spark)
       .take(32)
       .drop(2)
 
     combineCounts(month) / 30
   }
   
-  /** Returns a Dataset[Row] containing the tweet count from each date in the DataFrame. */
-  def countsByDate(df: DataFrame, spark: SparkSession): Dataset[Row] = {
+  /** 
+    * Returns a Dataset[Row] containing the tweet count from each date in the
+    * DataFrame, in reverse chronological order. 
+    */
+  def dailyCountsChronological(df: DataFrame, spark: SparkSession): Dataset[Row] = {
     import spark.implicits._
 
-    df.select($"date")
-      .groupBy($"date")
-      .agg(count($"date") as "num_tweets")
+    df.groupBy($"date")
+      .agg(count("*") as "num_tweets")
       .orderBy(desc("date"))
   }
   
@@ -77,10 +79,10 @@ object TweetCount {
     * Returns a Dataset[Row] containing the tweet count from each date, sorted in 
     * descending order by number of tweets.
     */
-  def countsByDateDesc(df: DataFrame, spark: SparkSession): Dataset[Row] = {
+  def dailyCountsRanked(df: DataFrame, spark: SparkSession): Dataset[Row] = {
     import spark.implicits._
 
-    countsByDate(df, spark)
+    dailyCountsChronological(df, spark)
       .orderBy(desc("num_tweets"))
   }
 

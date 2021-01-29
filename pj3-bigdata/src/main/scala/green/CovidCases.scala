@@ -32,26 +32,22 @@ object CovidCases {
   def countDailyCases(df: DataFrame, spark: SparkSession): DataFrame = {
     import spark.implicits._
 
-    df.select($"cdc_report_dt", $"age_group")
-      .filter(
+    df.filter(
         $"age_group" === "0 - 9 Years" || 
         $"age_group" === "10 - 19 Years" || 
         $"age_group" === "20 - 29 Years"
       )
-      .groupBy("cdc_report_dt")
+      .groupBy($"cdc_report_dt".as("Date"))
       .count()
-      .withColumnRenamed("cdc_report_dt", "Date")
   }
 
   /** Returns Dataset containing daily cases for ages 0 - 9. */
   def countDailyCasesChildren(df: DataFrame, spark: SparkSession): Dataset[Row] = {
     import spark.implicits._
 
-    df.select($"cdc_report_dt", $"age_group")
-      .filter($"age_group" === "0 - 9 Years")
-      .groupBy("cdc_report_dt")
+    df.filter($"age_group" === "0 - 9 Years")
+      .groupBy($"cdc_report_dt".as("Date"))
       .count()
-      .withColumnRenamed("cdc_report_dt", "Date")
       .orderBy(desc("Count"))
   }
   
@@ -59,11 +55,9 @@ object CovidCases {
   def countDailyCasesTeens(df: DataFrame, spark: SparkSession): Dataset[Row] = {
     import spark.implicits._
 
-    df.select($"cdc_report_dt", $"age_group")
-      .filter($"age_group" === "10 - 19 Years")
-      .groupBy("cdc_report_dt")
+    df.filter($"age_group" === "10 - 19 Years")
+      .groupBy($"cdc_report_dt".as("Date"))
       .count()
-      .withColumnRenamed("cdc_report_dt", "Date")
       .orderBy(desc("Count"))
   }
   
@@ -71,11 +65,9 @@ object CovidCases {
   def countDailyCasesTwenties(df: DataFrame, spark: SparkSession): Dataset[Row] = {
     import spark.implicits._
 
-    df.select($"cdc_report_dt", $"age_group")
-      .filter($"age_group" === "20 - 29 Years")
-      .groupBy("cdc_report_dt")
+    df.filter($"age_group" === "20 - 29 Years")
+      .groupBy($"cdc_report_dt".as("Date"))
       .count()
-      .withColumnRenamed("cdc_report_dt", "Date")
       .orderBy(desc("Count"))
   }
   
@@ -83,11 +75,9 @@ object CovidCases {
   def countDailyCasesThirties(df: DataFrame, spark: SparkSession): Dataset[Row] = {
     import spark.implicits._
     
-    df.select($"cdc_report_dt", $"age_group")
-      .filter($"age_group" === "30 - 39 Years")
-      .groupBy("cdc_report_dt")
+    df.filter($"age_group" === "30 - 39 Years")
+      .groupBy($"cdc_report_dt".as("Date"))
       .count()
-      .withColumnRenamed("cdc_report_dt", "Date")
       .orderBy(desc("Count"))
   }
 }
