@@ -5,12 +5,6 @@ import org.apache.spark.sql.functions.{avg, count, desc}
 
 object TweetCount {
 
-  // the df for all of these is:
-  // val df = spark.read
-  //   .option("header", "true")
-  //   .option("delimiter", "\t")
-  //   .csv("s3a://adam-king-848/data/q4_a_full.tsv")
-
   /** Returns the highest number of tweets from a single date. */
   def peak(df: DataFrame, spark: SparkSession): Long = {
     import spark.implicits._
