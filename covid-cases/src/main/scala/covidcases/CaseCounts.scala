@@ -3,7 +3,7 @@ package covidcases
 import org.apache.spark.sql.{DataFrame, Dataset, Row, SparkSession}
 import org.apache.spark.sql.functions.{avg, count, desc}
 
-object CovidCases {
+object CaseCounts {
   
   /** Returns Dataset containing daily cases for ages 0 - 29, ordered by Date. */
   def daysChronological(df: DataFrame, spark: SparkSession): Dataset[Row] = {

@@ -15,6 +15,6 @@ object Main {
       .csv("s3a://adam-king-848/data/CDC_Covid_archive.tsv")
       .cache()
 
-    CovidCases.casesByCount(covidDF, spark)
+    CaseCounts.casesByCount(covidDF, spark)
   }
 }
