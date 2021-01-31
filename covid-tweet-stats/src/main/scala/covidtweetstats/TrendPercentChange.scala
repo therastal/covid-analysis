@@ -1,4 +1,4 @@
-package green
+package covidtweetstats
 
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
@@ -37,8 +37,8 @@ object TrendPercentChange {
   }
 
   /**
-    * Returns the positive or negative change in percentage between `today` 
-    * and `other`. 
+    * Returns the positive or negative change in percentage between `latest` 
+    * and `comparison`. 
     */
   def calculateChange(latest: Double, comparison: Double): Long = {
     (((comparison - latest) / comparison) * 100).round

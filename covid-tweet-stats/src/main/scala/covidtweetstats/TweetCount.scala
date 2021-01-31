@@ -1,4 +1,4 @@
-package green
+package covidtweetstats
 
 import org.apache.spark.sql.{DataFrame, Dataset, Row, SparkSession}
 import org.apache.spark.sql.functions.{avg, count, desc}

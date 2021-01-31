@@ -1,19 +1,12 @@
-package green
+package covidcases
 
 import org.apache.spark.sql.{DataFrame, Dataset, Row, SparkSession}
 import org.apache.spark.sql.functions.{avg, count, desc}
 
 object CovidCases {
   
-  // Need to initialize these somewhere (probably in a file io class)
-  //
-  // val df = spark.read
-  //   .option("header", "true")
-  //   .option("delimiter", "\t")
-  //   .csv("s3a://adam-king-848/data/CDC_Covid_archive.tsv")
-  
   /** Returns Dataset containing daily cases for ages 0 - 29, ordered by Date. */
-  def casesByDate(df: DataFrame, spark: SparkSession): Dataset[Row] = {
+  def daysChronological(df: DataFrame, spark: SparkSession): Dataset[Row] = {
     import spark.implicits._
 
     countDailyCases(df, spark)
@@ -21,7 +14,7 @@ object CovidCases {
   }
 
   /** Returns Dataset containing daily cases for ages 0 - 29, ordered by Count. */
-  def casesByCount(df: DataFrame, spark: SparkSession): Dataset[Row] = {
+  def daysByCount(df: DataFrame, spark: SparkSession): Dataset[Row] = {
     import spark.implicits._
 
     countDailyCases(df, spark)
